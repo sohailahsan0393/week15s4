@@ -1,0 +1,19 @@
+name: wf-ci-development
+on:
+  pull_requests:
+      branches:
+         - develop
+jobs:
+  ci-development-job:
+     runs-on: ubuntu-latest
+     steps:
+       - name: checkout repo
+         uses: actions/checkout@v4
+       - name: lint html and css files
+          run: |
+          npx htmlhint "**/*.html"
+          npx stylelint "**/*.css"
+       - name: test build
+         run: |
+           npx parcel build "./src/index.html" --dist-dir "./dist" --public-url "./"     
+            
